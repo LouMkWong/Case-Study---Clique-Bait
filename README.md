@@ -1,23 +1,6 @@
 # Case-Study---Clique-Bait
 8weeksqlchallenge.com
 
----
-
-**Query #1**
-
-    SELECT * FROM clique_bait.events LIMIT 10;
-
-| visit_id | cookie_id | page_id | event_type | sequence_number | event_time               |
-| -------- | --------- | ------- | ---------- | --------------- | ------------------------ |
-| ccf365   | c4ca42    | 1       | 1          | 1               | 2020-02-04T19:16:09.182Z |
-| ccf365   | c4ca42    | 2       | 1          | 2               | 2020-02-04T19:16:17.358Z |
-| ccf365   | c4ca42    | 6       | 1          | 3               | 2020-02-04T19:16:58.454Z |
-| ccf365   | c4ca42    | 9       | 1          | 4               | 2020-02-04T19:16:58.609Z |
-| ccf365   | c4ca42    | 9       | 2          | 5               | 2020-02-04T19:17:51.729Z |
-| ccf365   | c4ca42    | 10      | 1          | 6               | 2020-02-04T19:18:11.605Z |
-| ccf365   | c4ca42    | 10      | 2          | 7               | 2020-02-04T19:19:10.570Z |
-| ccf365   | c4ca42    | 11      | 1          | 8               | 2020-02-04T19:19:46.911Z |
-| ccf365   | c4ca42    | 11      | 2          | 9               | 2020-02-04T19:20:45.274Z |
-| ccf365   | c4ca42    | 12      | 1          | 10              | 2020-02-04T19:20:52.307Z |
-
----
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://8weeksqlchallenge.com/images/case-study-designs/6.png">
+</picture>
