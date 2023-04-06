@@ -89,8 +89,7 @@ In this case study - you are required to support Danny’s vision and analyse hi
 
 ### 5. What is the percentage of visits which have a purchase event?
 ````sql
---divide total number purchases by the total number of distinct visit 
-
+    --divide total number purchases by the total number of distinct visit 
     SELECT
     	100
         *CAST((SELECT COUNT(event_type) FROM clique_bait.events where event_type = 3) as int)
@@ -101,6 +100,7 @@ In this case study - you are required to support Danny’s vision and analyse hi
 | ----------------------------- |
 | 49                            |
 
+### 6. What is the percentage of visits which view the checkout page but do not have a purchase event?
 ---
 
 
