@@ -101,6 +101,26 @@ In this case study - you are required to support Danny’s vision and analyse hi
 | 49                            |
 
 ### 6. What is the percentage of visits which view the checkout page but do not have a purchase event?
+````sql
+    -- where page id 12 is the check out page, page id 13 is the confirmation page 
+    ---and event type 3 is the event when customer make a purchase
+
+    -- first calculate the percentage of how many people make a purchase after view the purchase page 
+    -- then subtract 1 from it to get the percentage of customer who viewed the checkout page but didn't make a purchase
+    SELECT 
+    	100 - 
+        ROUND(
+        (100*CAST(COUNT(*) as numeric) / 
+        (SELECT COUNT(*) FROM clique_bait.events WHERE page_id = 12 GROUP BY page_id))
+        , 2) as PCT_NO_PURCHASE
+    FROM clique_bait.events
+    WHERE page_id = 13 and event_type = 3
+    GROUP BY page_id;
+````
+| pct_no_purchase |
+| --------------- |
+| 15.50           |
+
 ---
 
 
