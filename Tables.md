@@ -36,6 +36,9 @@
 | 8       | Abalone        | Shellfish        | 6          |
 | 9       | Lobster        | Shellfish        | 7          |
 | 10      | Crab           | Shellfish        | 8          |
+| 11      | Oyster         | Shellfish        | 9          |
+| 12      | Checkout       |                  |            |
+| 13      | Confirmation   |                  |            |
 
 ## EVENT_IDENTIFIER
 
