@@ -294,7 +294,7 @@ We can do this by turning some of our sql scripts above into a CTE then join the
 | Most purchased | Lobster | 754 |
 | Most likely to be abandoned at check out | Russian Caviar | 249 |
 | Highest view to purchase percentage | Lobster | 48.78% |
-| Average conversion rate from view to cart add |   | 60.95% |
-| Average conversion rate from cart add to purchase |   | 75.93% |
+| Average conversion rate from view to cart add | --- | 60.95% |
+| Average conversion rate from cart add to purchase | --- | 75.93% |
 ---
 
