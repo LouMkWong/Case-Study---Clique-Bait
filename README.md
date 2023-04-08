@@ -171,25 +171,36 @@ In this case study - you are required to support Danny’s vision and analyse hi
 > Note that each view has a 60 percent chance that the product will get added to cart for all 3 category
 
 ### 9. What are the top 3 products by purchases? 
+At first glance this should be a simple question but it gets complicated because of the way how the database is set up.
+To find the top products purchased, we first have to find out the visit_ids that actually made a purchase (event_id = 3), we then find all the products that were added to cart for each of those visit_id.  At last, we count each product that were added to cart (that are also "purchased")
 ````sql
+    WITH purchase as (
+      SELECT
+      	visit_id,
+      	event_type
+      FROM clique_bait.events
+      WHERE event_type = 3)
+      
     SELECT
     	ph.page_name as Product_name,
-        COUNT(*) as added_to_cart
-    FROM clique_bait.events as e
+        COUNT(e.page_id) as Purchase_made
+    FROM clique_bait.events AS e
+    JOIN purchase as p on e.visit_id = p.visit_id
     JOIN clique_bait.page_hierarchy as ph on e.page_id = ph.page_id
-    WHERE event_type = 2 
+    WHERE e.event_type = 2
     GROUP BY ph.page_name
-    ORDER BY 2 DESC
-    LIMIT 3;
+    ORDER BY 2 DESC;
 ````
-| product_name   | added_to_cart |
+| product_name   | purchase_made |
 | -------------- | ------------- |
-| Lobster        | 968           |
-| Crab           | 949           |
-| Russian Caviar | 946           |
+| Lobster        | 754           |
+| Oyster         | 726           |
+| Crab           | 719           |
+| Salmon         | 711           |
+| Kingfish       | 707           |
+| Black Truffle  | 707           |
+| Abalone        | 699           |
+| Russian Caviar | 697           |
+| Tuna           | 697           |
 
-> We don't actually have a way to confirm the number of PURCHASE with how the database was constructed.  However, we are able to find the number of "add to cart" for each product and that's what we used to find the top 3 "purchased" product.  
----
-
-
-
+> Top 3 products purchased would be "Lobster", "Oyster" and "Crab".  Interesting that although Russian caviar has the third highest view count among all product but it is the second least sold product.  Salmon and kingfish also has higher view count then lobster but are sold less then lobster by a small margin.
