@@ -174,20 +174,22 @@ In this case study - you are required to support Danny’s vision and analyse hi
 At first glance this should be a simple question but it gets complicated because of the way how the database is set up.
 To find the top products purchased, we first have to find out the visit_ids that actually made a purchase (event_id = 3), we then find all the products that were added to cart for each of those visit_id.  At last, we count each product that were added to cart (that are also "purchased")
 ````sql
+    -- find all the visitor_id that made a purchase
     WITH purchase as (
       SELECT
       	visit_id,
       	event_type
       FROM clique_bait.events
       WHERE event_type = 3)
-      
+    
+    -- with the visitor_ids we got from our cte, we find out all the products that those visitor had add to cart
     SELECT
     	ph.page_name as Product_name,
         COUNT(e.page_id) as Purchase_made
     FROM clique_bait.events AS e
     JOIN purchase as p on e.visit_id = p.visit_id
     JOIN clique_bait.page_hierarchy as ph on e.page_id = ph.page_id
-    WHERE e.event_type = 2
+    WHERE e.event_type = 2 -- add to cart
     GROUP BY ph.page_name
     ORDER BY 2 DESC;
 ````
