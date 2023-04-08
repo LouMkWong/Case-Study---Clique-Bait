@@ -1,4 +1,5 @@
-    ````sql
+
+````sql
     
     WITH SUMMARY as (
     WITH cart1 as (
@@ -56,5 +57,4 @@
     	ROUND(AVG(view_to_cart_add_pct), 2) as Average_Conversion_rate_from_view_to_cart_add,
         ROUND(AVG(cart_add_to_purchase_pct), 2) as Average_Conversion_rate_from_cart_add_to_purchase
     FROM SUMMARY;
-    
 ````
