@@ -279,7 +279,7 @@ We can do this by turning some of our sql scripts above into a CTE then join the
 | Lobster        | Shellfish | 1547       | 968           | 754           | 214       | 48.74                | 62.57                | 77.89                    |
 | Abalone        | Shellfish | 1525       | 932           | 699           | 233       | 45.84                | 61.11                | 75.00                    |
 
-> Using the script above and turn it into CTE can get use the following 2 numbers
+> Using the script above and turn it into CTE can get use the following 2 numbers [note_1](Case-Study---Clique-Bait/note_1.md)
 
 | average_conversion_rate_from_view_to_cart_add | average_conversion_rate_from_cart_add_to_purchase |
 | --------------------------------------------- | ------------------------------------------------- |
