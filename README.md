@@ -214,7 +214,7 @@ Creating a table that shows the following:
 - How many times was each product purchased?
 - How many times was each product added to a cart but not purchased (abandoned)?
 
-We can do this by turning some of our sql scripts above into a CTE then join them together and add a calculated column for "abandoned".
+We can do this by turning some of our sql scripts above into a CTE then join them together and add a some calculated columns for additional info.
 ````sql
     WITH cart1 as (
     SELECT 
