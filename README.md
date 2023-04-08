@@ -122,7 +122,7 @@ In this case study - you are required to support Danny’s vision and analyse hi
 | --------------- |
 | 15.50           |
 
-#7. What are the top 3 pages by number of views?
+### 7. What are the top 3 pages by number of views?
 ````sql
     SELECT 
     	ph.page_name,
@@ -149,7 +149,7 @@ In this case study - you are required to support Danny’s vision and analyse hi
 
 > As shown above, the top 3 pages by number of view are "ALL PRODUCTS", "CHECKOUT", and "HOME PAGE".  However, the top 3 viewed PRODUCT page would be "Oyster", "Crab" and "Russian Caviar)
 
-#8. What is the number of views and cart adds for each product category?
+### 8. What is the number of views and cart adds for each product category?
 ````sql
     SELECT 
     	ph.product_category,
@@ -169,6 +169,26 @@ In this case study - you are required to support Danny’s vision and analyse hi
 | Luxury           | 3032       | 1870                | 0.62 |
 
 > Note that each view has a 60 percent chance that the product will get added to cart for all 3 category
+
+### 9. What are the top 3 products by purchases? 
+````sql
+    SELECT
+    	ph.page_name as Product_name,
+        COUNT(*) as added_to_cart
+    FROM clique_bait.events as e
+    JOIN clique_bait.page_hierarchy as ph on e.page_id = ph.page_id
+    WHERE event_type = 2 
+    GROUP BY ph.page_name
+    ORDER BY 2 DESC
+    LIMIT 3;
+````
+| product_name   | added_to_cart |
+| -------------- | ------------- |
+| Lobster        | 968           |
+| Crab           | 949           |
+| Russian Caviar | 946           |
+
+> We don't actually have a way to confirm the number of PURCHASE with how the database was constructed.  However, we are able to find the number of "add to cart" for each product and that's what we used to find the top 3 "purchased" product.  Note that according to the finding above, there is an approximate 15 percent chance that customer don't make a purchase after adding to cart.
 ---
 
 
