@@ -205,4 +205,4 @@ To find the top products purchased, we first have to find out the visit_ids that
 | Russian Caviar | 697           |
 | Tuna           | 697           |
 
-> Top 3 products purchased would be "Lobster", "Oyster" and "Crab".  Interesting that although Russian caviar has the third highest view count among all product but it is the second least sold product.  Salmon and kingfish also has higher view count then lobster but are sold less then lobster by a small margin.
+> Top 3 products purchased would be "Lobster", "Oyster" and "Crab".  Interesting that although Russian caviar has the third highest view counts among all products but it is the second least sold product.  Salmon and kingfish also has higher view counts than lobster but are sold less then lobster by a small margin.
