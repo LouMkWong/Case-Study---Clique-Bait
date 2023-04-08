@@ -122,6 +122,53 @@ In this case study - you are required to support Danny’s vision and analyse hi
 | --------------- |
 | 15.50           |
 
+#7. What are the top 3 pages by number of views?
+````sql
+    SELECT 
+    	ph.page_name,
+        COUNT(*)
+    FROM clique_bait.events AS e 
+    JOIN clique_bait.page_hierarchy AS ph ON e.page_id = ph.page_id
+    WHERE e.event_type = 1 
+    GROUP BY ph.page_name
+    ORDER BY 2 DESC
+    LIMIT 10;
+````
+| page_name      | count |
+| -------------- | ----- |
+| All Products   | 3174  |
+| Checkout       | 2103  |
+| Home Page      | 1782  |
+| Oyster         | 1568  |
+| Crab           | 1564  |
+| Russian Caviar | 1563  |
+| Kingfish       | 1559  |
+| Salmon         | 1559  |
+| Lobster        | 1547  |
+| Abalone        | 1525  |
+
+> As shown above, the top 3 pages by number of view are "ALL PRODUCTS", "CHECKOUT", and "HOME PAGE".  However, the top 3 viewed PRODUCT page would be "Oyster", "Crab" and "Russian Caviar)
+
+#8. What is the number of views and cart adds for each product category?
+````sql
+    SELECT 
+    	ph.product_category,
+        SUM(CASE WHEN e.event_type = 1 THEN 1 ELSE 0 END) as view_count, -- if event type is 1 (page viewed) then we assign a 1 and sum them together
+        SUM(CASE WHEN e.event_type = 2 THEN 1 ELSE 0 END) as added_to_cart_count, -- if event type is 2 (add to cart) then we assign a 1 and sum them together
+        ROUND(CAST(SUM(CASE WHEN e.event_type = 2 THEN 1 ELSE 0 END) as numeric)/SUM(CASE WHEN e.event_type = 1 THEN 1 ELSE 0 END), 2) as rate
+    FROM clique_bait.events as e 
+    JOIN clique_bait.page_hierarchy as ph on e.page_id = ph.page_id
+    WHERE ph.product_category is NOT NULL
+    GROUP BY ph.product_category
+    ORDER BY 3 DESC;
+````
+| product_category | view_count | added_to_cart_count | rate |
+| ---------------- | ---------- | ------------------- | ---- |
+| Shellfish        | 6204       | 3792                | 0.61 |
+| Fish             | 4633       | 2789                | 0.60 |
+| Luxury           | 3032       | 1870                | 0.62 |
+
+> Note that each view has a 60 percent chance that the product will get added to cart for all 3 category
 ---
 
 
