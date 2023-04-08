@@ -188,7 +188,7 @@ In this case study - you are required to support Danny’s vision and analyse hi
 | Crab           | 949           |
 | Russian Caviar | 946           |
 
-> We don't actually have a way to confirm the number of PURCHASE with how the database was constructed.  However, we are able to find the number of "add to cart" for each product and that's what we used to find the top 3 "purchased" product.  Note that according to the finding above, there is an approximate 15 percent chance that customer don't make a purchase after adding to cart.
+> We don't actually have a way to confirm the number of PURCHASE with how the database was constructed.  However, we are able to find the number of "add to cart" for each product and that's what we used to find the top 3 "purchased" product.  
 ---
 
 
