@@ -363,7 +363,7 @@ From the table above, we are able to find the following observations: [note_2](n
 | ----------------------------- | --------------------------- | ---------------------------- |
 | 5.87                          | 0.50                        | 0.20                         |
 
-And: [note_3](note3.md)
+And looking into our campaign result (only when a purchase occured) : [note_3](note3.md)
 
 | campaign_name                     | count |
 | --------------------------------- | ----- |
@@ -372,5 +372,6 @@ And: [note_3](note3.md)
 | BOGOF - Fishing For Compliments   | 127   |
 
 As shown above, the most popular sale event where a purchase occurred is "Half Off - Treat Your Shellf(ish) and the least popular one is "BOGOF - Fishing For Compliments.
+
 ---
 
