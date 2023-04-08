@@ -206,3 +206,75 @@ To find the top products purchased, we first have to find out the visit_ids that
 | Tuna           | 697           |
 
 > Top 3 products purchased would be "Lobster", "Oyster" and "Crab".  Interesting that although Russian caviar has the third highest view counts among all products but it is the second least sold product.  Salmon and kingfish also has higher view counts than lobster but are sold less then lobster by a small margin.
+
+## B. Product Funnel Analysis
+Creating a table that shows the following: 
+- How many times was each product viewed?
+- How many times was each product added to cart?
+- How many times was each product purchased?
+- How many times was each product added to a cart but not purchased (abandoned)?
+
+We can do this by turning some of our sql scripts above into a CTE then join them together and add a calculated column for "abandoned".
+````sql
+    WITH cart1 as (
+    SELECT 
+       	ph.page_name as Product_name,
+        COUNT(*) as added_to_cart
+    FROM clique_bait.events AS e 
+    JOIN clique_bait.page_hierarchy AS ph ON e.page_id = ph.page_id
+    WHERE e.event_type = 2 
+    GROUP BY ph.page_name),
+    
+    view1 as (
+    SELECT 
+       	ph.page_name as Product_name,
+        COUNT(*) as view_count
+    FROM clique_bait.events AS e 
+    JOIN clique_bait.page_hierarchy AS ph ON e.page_id = ph.page_id
+    WHERE e.event_type = 1 
+    GROUP BY ph.page_name),
+    
+    purchased1 as (    
+      WITH purchase as (
+          SELECT
+          	visit_id,
+          	event_type
+          FROM clique_bait.events
+          WHERE event_type = 3)
+    
+        SELECT
+        	ph.page_name as Product_name,
+      		ph.product_category as category,
+            COUNT(e.page_id) as Purchase_made
+        FROM clique_bait.events AS e
+        JOIN purchase as p on e.visit_id = p.visit_id
+        JOIN clique_bait.page_hierarchy as ph on e.page_id = ph.page_id
+        WHERE e.event_type = 2 
+        GROUP BY ph.page_name, ph.product_category)
+        
+    SELECT 
+    	c.Product_name,
+        p.category,
+        v.view_count,
+        c.added_to_cart,
+        p.Purchase_made,
+        c.added_to_cart - p.Purchase_made as abandoned
+    FROM cart1 as c 
+    JOIN view1 as v on c.Product_name = v.Product_name
+    JOIN purchased1 as p on v.Product_name = p.Product_name
+    ORDER BY 2, 3 DESC;
+````
+| product_name   | category  | view_count | added_to_cart | purchase_made | abandoned |
+| -------------- | --------- | ---------- | ------------- | ------------- | --------- |
+| Salmon         | Fish      | 1559       | 938           | 711           | 227       |
+| Kingfish       | Fish      | 1559       | 920           | 707           | 213       |
+| Tuna           | Fish      | 1515       | 931           | 697           | 234       |
+| Russian Caviar | Luxury    | 1563       | 946           | 697           | 249       |
+| Black Truffle  | Luxury    | 1469       | 924           | 707           | 217       |
+| Oyster         | Shellfish | 1568       | 943           | 726           | 217       |
+| Crab           | Shellfish | 1564       | 949           | 719           | 230       |
+| Lobster        | Shellfish | 1547       | 968           | 754           | 214       |
+| Abalone        | Shellfish | 1525       | 932           | 699           | 233       |
+
+---
+
