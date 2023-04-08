@@ -258,23 +258,43 @@ We can do this by turning some of our sql scripts above into a CTE then join the
         v.view_count,
         c.added_to_cart,
         p.Purchase_made,
-        c.added_to_cart - p.Purchase_made as abandoned
+        c.added_to_cart - p.Purchase_made as abandoned,
+        ROUND(100*CAST(p.Purchase_made as numeric)/v.view_count, 2) as view_to_purchase_pct,
+        ROUND(100*CAST(c.added_to_cart as numeric)/v.view_count, 2) as view_to_cart_add_pct,
+        ROUND(100*CAST(p.Purchase_made as numeric)/c.added_to_cart, 2) as cart_add_to_purchase_pct
     FROM cart1 as c 
     JOIN view1 as v on c.Product_name = v.Product_name
     JOIN purchased1 as p on v.Product_name = p.Product_name
     ORDER BY 2, 3 DESC;
 ````
-| product_name   | category  | view_count | added_to_cart | purchase_made | abandoned |
-| -------------- | --------- | ---------- | ------------- | ------------- | --------- |
-| Salmon         | Fish      | 1559       | 938           | 711           | 227       |
-| Kingfish       | Fish      | 1559       | 920           | 707           | 213       |
-| Tuna           | Fish      | 1515       | 931           | 697           | 234       |
-| Russian Caviar | Luxury    | 1563       | 946           | 697           | 249       |
-| Black Truffle  | Luxury    | 1469       | 924           | 707           | 217       |
-| Oyster         | Shellfish | 1568       | 943           | 726           | 217       |
-| Crab           | Shellfish | 1564       | 949           | 719           | 230       |
-| Lobster        | Shellfish | 1547       | 968           | 754           | 214       |
-| Abalone        | Shellfish | 1525       | 932           | 699           | 233       |
+| product_name   | category  | view_count | added_to_cart | purchase_made | abandoned | view_to_purchase_pct | view_to_cart_add_pct | cart_add_to_purchase_pct |
+| -------------- | --------- | ---------- | ------------- | ------------- | --------- | -------------------- | -------------------- | ------------------------ |
+| Salmon         | Fish      | 1559       | 938           | 711           | 227       | 45.61                | 60.17                | 75.80                    |
+| Kingfish       | Fish      | 1559       | 920           | 707           | 213       | 45.35                | 59.01                | 76.85                    |
+| Tuna           | Fish      | 1515       | 931           | 697           | 234       | 46.01                | 61.45                | 74.87                    |
+| Russian Caviar | Luxury    | 1563       | 946           | 697           | 249       | 44.59                | 60.52                | 73.68                    |
+| Black Truffle  | Luxury    | 1469       | 924           | 707           | 217       | 48.13                | 62.90                | 76.52                    |
+| Oyster         | Shellfish | 1568       | 943           | 726           | 217       | 46.30                | 60.14                | 76.99                    |
+| Crab           | Shellfish | 1564       | 949           | 719           | 230       | 45.97                | 60.68                | 75.76                    |
+| Lobster        | Shellfish | 1547       | 968           | 754           | 214       | 48.74                | 62.57                | 77.89                    |
+| Abalone        | Shellfish | 1525       | 932           | 699           | 233       | 45.84                | 61.11                | 75.00                    |
 
+> Using the script above and turn it into CTE can get use the following 2 numbers
+
+| average_conversion_rate_from_view_to_cart_add | average_conversion_rate_from_cart_add_to_purchase |
+| --------------------------------------------- | ------------------------------------------------- |
+| 60.95                                         | 75.93                                             |
+
+### With the two tables we create, we are able to gather the following information: 
+
+|   |   |   |
+| ------------| ---- | ---- |
+| Most viewed | Oyster | 1568 |
+| Most added to cart | Lobster | 968 |
+| Most purchased | Lobster | 754 |
+| Most likely to be abandoned at check out | Russian Caviar | 249 |
+| Highest view to purchase percentage | Lobster | 48.78% |
+| Average conversion rate from view to cart add |   | 60.95% |
+| Average conversion rate from cart add to purchase |   | 75.93% |
 ---
 
